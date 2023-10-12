@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stack>
+#include <vector>
 using namespace std;
 typedef struct TreeNode *BinTree;
 typedef BinTree Position;
@@ -70,6 +71,52 @@ BinTree Parent(BinTree rt, BinTree current)
     }
 }
 
+// 先序遍历何中序遍历来确定一颗二叉树
+/*
+输入: preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]
+输出: [3,9,20,null,null,15,7]
+*/
+int FindRootIdx(vector<int> &inorder, int val)
+{
+    for (int i = 0; i < inorder.size(); i++)
+    {
+        if (inorder[i] == val)
+        {
+            return i;
+        }
+    }
+    cout << val << endl;
+    cout << "cannot find the index of root." << endl;
+    return -1;
+}
+
+// 根据前序遍历和中序遍历得到的数组构建tree。
+TreeNode *buildTree(vector<int> preorder, vector<int> inorder)
+{
+    if (preorder.size() == 0 || inorder.size() == 0)
+        return nullptr;
+    BinTree root = new TreeNode(preorder[0]);
+    if (preorder.size() == 1 && inorder.size() == 1)
+    {
+        return root;
+    }
+    int idx = FindRootIdx(inorder, preorder[0]);
+    if (idx)
+    {
+        vector<int> LeftPreorder(preorder.begin() + 1, preorder.begin() + idx + 1);
+        vector<int> RightPreorder(preorder.begin() + idx + 1, preorder.end());
+        vector<int> LeftInorder(inorder.begin(), inorder.begin() + idx);
+        vector<int> RightInorder(inorder.begin() + idx + 1, inorder.end());
+        root->left = buildTree(LeftPreorder, LeftInorder);
+        root->right = buildTree(RightPreorder, RightInorder);
+        return root;
+    }
+    else
+    {
+        return nullptr;
+    }
+}
+
 int main()
 {
     // driver code of InOrderTraversal
@@ -87,8 +134,14 @@ int main()
     // InOrderTraversal(root);
 
     // driver code for Parent
-    if (Parent(root, root->left->right))
-    {
-        cout << "Yes" << endl;
-    }
+    // if (Parent(root, root->left->right))
+    // {
+    //     cout << "Yes" << endl;
+    // }
+
+    // driver code using preorder and inorder vector to build tree.
+    vector<int> preorder = {3, 9, 20, 15, 7};
+    vector<int> inorder = {9, 3, 15, 20, 7};
+    BinTree tree = buildTree(preorder, inorder);
+    InOrderTraversal(tree);
 }
