@@ -41,19 +41,54 @@ void InOrderTraversal(BinTree BT)
     cout << endl;
 }
 
+// 判断current 是否为rt的孩子
+BinTree Parent(BinTree rt, BinTree current)
+{
+    if (current == nullptr || rt == nullptr)
+    {
+        // nullptr不为rt的孩子
+        return nullptr;
+    }
+    else
+    {
+        if (current == rt->left || current == rt->right)
+        {
+            return rt;
+        }
+        else
+        {
+            // 向左边寻找
+            BinTree Left = Parent(rt->left, current);
+            if (Left)
+                return rt;
+            // 向右边寻找
+            BinTree Right = Parent(rt->right, current);
+            if (Right)
+                return rt;
+            return nullptr;
+        }
+    }
+}
+
 int main()
 {
     // driver code of InOrderTraversal
-    /*
-            1
-          2   3    output: 4 2 5 1 7 3
-        4  5 7
-    */
+    // /*
+    //         1
+    //       2   3    output: 4 2 5 1 7 3
+    //     4  5 7
+    // */
     BinTree root = new TreeNode(1);
     root->left = new TreeNode(2);
     root->left->left = new TreeNode(4);
     root->left->right = new TreeNode(5);
     root->right = new TreeNode(3);
     root->right->left = new TreeNode(7);
-    InOrderTraversal(root);
+    // InOrderTraversal(root);
+
+    // driver code for Parent
+    if (Parent(root, root->left->right))
+    {
+        cout << "Yes" << endl;
+    }
 }
