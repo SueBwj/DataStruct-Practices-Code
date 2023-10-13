@@ -120,11 +120,11 @@ TreeNode *buildTree(vector<int> preorder, vector<int> inorder)
 int main()
 {
     // driver code of InOrderTraversal
-    // /*
-    //         1
-    //       2   3    output: 4 2 5 1 7 3
-    //     4  5 7
-    // */
+    /*
+            1
+          2   3    output: 4 2 5 1 7 3
+        4  5 7
+    */
     BinTree root = new TreeNode(1);
     root->left = new TreeNode(2);
     root->left->left = new TreeNode(4);

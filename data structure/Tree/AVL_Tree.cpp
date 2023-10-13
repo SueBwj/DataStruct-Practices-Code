@@ -11,7 +11,7 @@ public:
     Node *left;
     Node *right;
     int height;
-    Node(int val) : key(val), left(nullptr), right(nullptr), height(1) {}
+    Node(int val) : key(val), left(nullptr), right(nullptr), height(0) {}
     Node() : key(0), left(nullptr), right(nullptr), height(0) {}
 };
 
@@ -223,44 +223,42 @@ int main()
 
     /* Constructing tree given in
     the above figure */
-    root = AVL_Insert(root, 9);
-    root = AVL_Insert(root, 5);
-    root = AVL_Insert(root, 10);
-    root = AVL_Insert(root, 0);
-    root = AVL_Insert(root, 6);
-    root = AVL_Insert(root, 11);
-    root = AVL_Insert(root, -1);
-    root = AVL_Insert(root, 1);
+    root = AVL_Insert(root, 4);
     root = AVL_Insert(root, 2);
+    root = AVL_Insert(root, 6);
+    root = AVL_Insert(root, 1);
+    root = AVL_Insert(root, 3);
+    root = AVL_Insert(root, 5);
+    root = AVL_Insert(root, 7);
 
-    /* The constructed AVL Tree would be
-            9
-        / \
-        1 10
-        / \ \
-    0 5 11
-    / / \
-    -1 2 6
-    */
+    // /* The constructed AVL Tree would be
+    //         9
+    //     / \
+    //     1 10
+    //     / \ \
+    // 0 5 11
+    // / / \
+    // -1 2 6
+    // */
 
-    cout << "Preorder traversal of the "
-            "constructed AVL tree is \n";
-    preOrder(root);
+    // cout << "Preorder traversal of the "
+    //         "constructed AVL tree is \n";
+    // preOrder(root);
 
-    root = AVL_Delete(root, 10);
+    // root = AVL_Delete(root, 10);
 
-    /* The AVL Tree after deletion of 10
-            1
-        / \
-        0 9
-        / / \
-    -1 5     11
-        / \
-        2 6
-    */
+    // /* The AVL Tree after deletion of 10
+    //         1
+    //     / \
+    //     0 9
+    //     / / \
+    // -1 5     11
+    //     / \
+    //     2 6
+    // */
 
-    cout << "\nPreorder traversal after"
-         << " deletion of 10 \n";
+    // cout << "\nPreorder traversal after"
+    //      << " deletion of 10 \n";
     preOrder(root);
 
     return 0;

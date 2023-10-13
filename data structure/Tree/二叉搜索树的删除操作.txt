@@ -4,7 +4,7 @@
 		a.往右子树找最小的节点填充节点
 			root->val = FindMin(root->right)->val;
 		b.删除找到的最小节点
-			root->right = Delete(root->data,root->right);
+			root->right = Delete(root->val,root->right);
 	B.被删除的为叶子节点或只有一个节点
 		Tmp = root;
 		a. if(root->left != nullptr)
