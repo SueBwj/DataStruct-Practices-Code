@@ -8,7 +8,6 @@ class MaxHeap
 {
 private:
     vector<T> MaxHeap; // 全局变量
-    int size;
     // 用数组构建堆，父母，左孩子和有孩子存在对应关系
     // 获取左孩子下标索引
     int left(int i)
@@ -30,7 +29,7 @@ public:
     // 访问堆顶元素
     T peek()
     {
-        if (size <= 0)
+        if (MaxHeap.size() <= 0)
         {
             throw out_of_range("the MaxHeap is empty");
         }
@@ -57,11 +56,10 @@ public:
         }
     }
 
-    void push(int data)
+    void push(T data)
     {
         MaxHeap.push_back(data);
         siftUp(MaxHeap.size() - 1);
-        size++;
     }
 
     // 将元素从堆中删除
@@ -93,15 +91,32 @@ public:
 
     void pop()
     {
-        if (size < 0)
+        if (MaxHeap.size() < 0)
         {
             throw out_of_range("the MaxHeap is empty.");
         }
         swap(MaxHeap[0], MaxHeap[MaxHeap.size() - 1]);
         MaxHeap.pop_back();
         siftDown(0);
-        size--;
     }
+    // 向下堆化。
+    void Down_Heapify(vector<T> nums)
+    {
+        MaxHeap = nums;
+        for (int i = parent(MaxHeap.size() - 1); i >= 0; i--)
+        {
+            siftDown(i);
+        }
+    }
+    // 一个个插入然后向上堆化
+    void Insert_Heapify(vector<T> nums)
+    {
+        for (int i = 0; i < nums.size(); i++)
+        {
+            push(nums[i]);
+        }
+    }
+
     // helper functions
     void Print()
     {
@@ -116,33 +131,11 @@ public:
 // driver code
 int main()
 {
-    MaxHeap<int> *MH = new MaxHeap<int>();
-    MH->push(1);
-    MH->push(3);
-    MH->push(5);
-    MH->push(2);
-    MH->push(7);
-    MH->push(9);
-    MH->push(8);
-    MH->push(10);
-    MH->Print();
-    cout << MH->peek() << endl;
-    MH->pop();
-    MH->Print();
-
-    cout << MH->peek() << endl;
-    MH->pop();
-    MH->Print();
-
-    cout << MH->peek() << endl;
-    MH->pop();
-    MH->Print();
-
-    cout << MH->peek() << endl;
-    MH->pop();
-    MH->Print();
-
-    cout << MH->peek() << endl;
-    MH->pop();
-    MH->Print();
+    MaxHeap<int> *MH1 = new MaxHeap<int>();
+    vector<int> v = {1, 3, 5, 2, 7, 9, 8, 10};
+    MH1->Down_Heapify(v);
+    MH1->Print();
+    MaxHeap<int> *MH2 = new MaxHeap<int>();
+    MH2->Insert_Heapify(v);
+    MH2->Print();
 }
