@@ -35,6 +35,7 @@ int getBf(Node *root)
     {
         return getHeight(root->left) - getHeight(root->right);
     }
+    cout << "该节点为空节点" << endl;
     return -1;
 }
 
@@ -223,13 +224,13 @@ int main()
 
     /* Constructing tree given in
     the above figure */
-    root = AVL_Insert(root, 4);
-    root = AVL_Insert(root, 2);
-    root = AVL_Insert(root, 6);
-    root = AVL_Insert(root, 1);
-    root = AVL_Insert(root, 3);
-    root = AVL_Insert(root, 5);
-    root = AVL_Insert(root, 7);
+    root = AVL_Insert(root, 88);
+    root = AVL_Insert(root, 70);
+    root = AVL_Insert(root, 61);
+    root = AVL_Insert(root, 96);
+    root = AVL_Insert(root, 120);
+    root = AVL_Insert(root, 90);
+    root = AVL_Insert(root, 65);
 
     // /* The constructed AVL Tree would be
     //         9
