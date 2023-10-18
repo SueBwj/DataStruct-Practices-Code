@@ -1,14 +1,14 @@
 #include <iostream>
 using namespace std;
 #define HASHSIZE 13;
-#define NULLKEY -32768 // ±íÊ¾µ±Ç°µØÖ·Ã»ÓĞÔªËØ
-int m = HASHSIZE;      // È«¾Ö±äÁ¿
+#define NULLKEY -32768 // è¡¨ç¤ºå½“å‰åœ°å€æ²¡æœ‰å…ƒç´ 
+int m = HASHSIZE;      // å…¨å±€å˜é‡
 
 struct HashTable
 {
-    int cnt;  // µ±Ç°ÔªËØ¸öÊı
-    int size; // hashtableµÄ´óĞ¡
-    int *arr; // ¶¯Ì¬·ÖÅäÊı×é
+    int cnt;  // å½“å‰å…ƒç´ ä¸ªæ•°
+    int size; // hashtableçš„å¤§å°
+    int *arr; // åŠ¨æ€åˆ†é…æ•°ç»„
 };
 
 void InitHashTable(HashTable *H)
@@ -21,22 +21,22 @@ void InitHashTable(HashTable *H)
     }
 }
 
-// É¢ÁĞº¯Êı -- ¸ù¾İkeyµÃ³öÆä²åÈëµÄµØÖ·
+// æ•£åˆ—å‡½æ•° -- æ ¹æ®keyå¾—å‡ºå…¶æ’å…¥çš„åœ°å€
 int Hash(int key)
 {
     return key % m;
 }
 
-// ²åÈë¹Ø¼ü×Ö½øÉ¢ÁĞ±í
+// æ’å…¥å…³é”®å­—è¿›æ•£åˆ—è¡¨
 void InsertHashTable(HashTable *H, int key)
 {
     int addr = Hash(key);
     while (H->arr[addr] != NULLKEY)
     {
-        addr = (addr + 1) % m; // ¿ª·ÅµØÖ·µÄÏßĞÔÌ½²â
+        addr = (addr + 1) % m; // å¼€æ”¾åœ°å€çš„çº¿æ€§æ¢æµ‹
         if (addr == Hash(key))
         {
-            cout << "É¢ÁĞ±íÒÑ¾­ÂúÁË" << endl;
+            cout << "æ•£åˆ—è¡¨å·²ç»æ»¡äº†" << endl;
         }
     }
     H->arr[addr] = key;
@@ -44,13 +44,13 @@ void InsertHashTable(HashTable *H, int key)
 
 bool SearchHash(HashTable *H, int key)
 {
-    int addr = Hash(key); // »ñÈ¡keyµÄµØÖ·
-    // ²úÉúÁË³åÍ»
+    int addr = Hash(key); // è·å–keyçš„åœ°å€
+    // äº§ç”Ÿäº†å†²çª
     while (H->arr[addr] != key)
     {
         if (H->arr[addr] == NULLKEY || addr == Hash(key))
         {
-            cout << "¸Ã¹Ø¼ü´Ê²»´æÔÚ" << endl;
+            cout << "è¯¥å…³é”®è¯ä¸å­˜åœ¨" << endl;
             return false;
         }
         addr = (addr + 1) % m;
