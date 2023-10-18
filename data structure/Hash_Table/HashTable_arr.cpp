@@ -123,7 +123,7 @@ int SquareSearch(HashTable *H, int key)
 void Insert(HashTable *H, int key)
 {
     int addr = Hash(H, key);
-    addr = LinearSearch(H, key);
+    addr = SquareSearch(H, key);
     if (H->arr[addr].info != Legitimate)
     {
         H->arr[addr].data = key;
