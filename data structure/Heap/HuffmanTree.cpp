@@ -181,10 +181,12 @@ int main()
     HuffmanTreeNode<int> *node1 = new HuffmanTreeNode<int>(1);
     HuffmanTreeNode<int> *node2 = new HuffmanTreeNode<int>(2);
     HuffmanTreeNode<int> *node3 = new HuffmanTreeNode<int>(3);
+    HuffmanTreeNode<int> *node4 = new HuffmanTreeNode<int>(3);
 
     MH1->push(node1);
     MH1->push(node2);
     MH1->push(node3);
+    MH1->push(node4);
     HuffmanTreeNode<int> *root = nullptr;
     root = CreateHuffman(MH1);
     Preorder(root);
