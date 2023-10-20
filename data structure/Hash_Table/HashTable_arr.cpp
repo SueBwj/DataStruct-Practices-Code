@@ -1,40 +1,40 @@
 #include <iostream>
 #include <cmath>
-#define MAXTABLESIZE 100000 // ¶¨ÒåÔÊĞí¿ª±ÙµÄ×î´óÉ¢ÁĞ±í³¤¶È
+#define MAXTABLESIZE 100000 // å®šä¹‰å…è®¸å¼€è¾Ÿçš„æœ€å¤§æ•£åˆ—è¡¨é•¿åº¦
 using namespace std;
 /* Task
- *   1. ¹şÏ£±í´æÖµµ¥Ôª½á¹¹
- *   2. ¹şÏ£±íÕûÌå½á¹¹
- *   3. ´´½¨hash±í
- *   4. Æ½·½Ì½²â²éÕÒ
- *   5. ÏßĞÔÌ½²â²éÕÒ
- *   6. ²åÈë
- *   7. ¹şÏ£º¯Êı
+ *   1. å“ˆå¸Œè¡¨å­˜å€¼å•å…ƒç»“æ„
+ *   2. å“ˆå¸Œè¡¨æ•´ä½“ç»“æ„
+ *   3. åˆ›å»ºhashè¡¨
+ *   4. å¹³æ–¹æ¢æµ‹æŸ¥æ‰¾
+ *   5. çº¿æ€§æ¢æµ‹æŸ¥æ‰¾
+ *   6. æ’å…¥
+ *   7. å“ˆå¸Œå‡½æ•°
  */
 
-// ±íÊ¾µ¥Ôª´æ´¢½á¹¹×´Ì¬
+// è¡¨ç¤ºå•å…ƒå­˜å‚¨ç»“æ„çŠ¶æ€
 typedef enum
-{ // ·Ö±ğ¶ÔÓ¦£ºÓĞºÏ·¨ÔªËØ¡¢¿Õ¡¢ÓĞÒÑÉ¾³ıÔªËØ
+{ // åˆ†åˆ«å¯¹åº”ï¼šæœ‰åˆæ³•å…ƒç´ ã€ç©ºã€æœ‰å·²åˆ é™¤å…ƒç´ 
     Legitimate,
     Empty,
     Deleted
-} EntryType; // ¶¨Òåµ¥Ôª×´Ì¬ÀàĞÍ
+} EntryType; // å®šä¹‰å•å…ƒçŠ¶æ€ç±»å‹
 
-// µ¥Ôª´æ´¢½á¹¹Òª´æÈ¡Êı¾İºÍ×´Ì¬
+// å•å…ƒå­˜å‚¨ç»“æ„è¦å­˜å–æ•°æ®å’ŒçŠ¶æ€
 struct HashEntry
 {
     int data;
     EntryType info;
 };
 
-// ¹şÏ£±íĞèÒªÓĞÊı×éºÍÊı×é´óĞ¡
+// å“ˆå¸Œè¡¨éœ€è¦æœ‰æ•°ç»„å’Œæ•°ç»„å¤§å°
 struct HashTable
 {
     HashEntry *arr;
     int TableSize;
 };
 
-// ÅĞ¶ÏËØÊı
+// åˆ¤æ–­ç´ æ•°
 bool isPrime(int val)
 {
     for (int i = (int)sqrt(val); i > 2; i--)
@@ -47,10 +47,10 @@ bool isPrime(int val)
     return true;
 }
 
-// ²éÕÒËØÊı
+// æŸ¥æ‰¾ç´ æ•°
 int nextPrime(int val)
 {
-    val = (val % 2 == 0) ? val + 1 : val + 2; // ´ÓÆæÊı¿ªÊ¼²éÕÒ
+    val = (val % 2 == 0) ? val + 1 : val + 2; // ä»å¥‡æ•°å¼€å§‹æŸ¥æ‰¾
     while (val < MAXTABLESIZE)
     {
         if (isPrime(val))
@@ -60,7 +60,7 @@ int nextPrime(int val)
         }
         val += 2;
     }
-    cout << "²éÕÒËØÊı´íÎó" << endl;
+    cout << "æŸ¥æ‰¾ç´ æ•°é”™è¯¯" << endl;
     return -1;
 }
 
@@ -76,13 +76,13 @@ HashTable *CreateHashTable(int tableSize)
     return H;
 }
 
-// ¶Ôhash±íµÄ´óĞ¡È¡Óà
+// å¯¹hashè¡¨çš„å¤§å°å–ä½™
 int Hash(HashTable *H, int key)
 {
     return key % H->TableSize;
 }
 
-// ÏßĞÔÌ½²â·¨
+// çº¿æ€§æ¢æµ‹æ³•
 int LinearSearch(HashTable *H, int key)
 {
     int newPos, currentPos;
@@ -94,22 +94,22 @@ int LinearSearch(HashTable *H, int key)
     return newPos;
 }
 
-// Æ½·½Ì½²â·¨
+// å¹³æ–¹æ¢æµ‹æ³•
 int SquareSearch(HashTable *H, int key)
 {
     int currentPos, newPos;
-    int cnt = 0; // ¼ÇÂ¼³åÍ»´ÎÊı
+    int cnt = 0; // è®°å½•å†²çªæ¬¡æ•°
     newPos = currentPos = Hash(H, key);
     while (H->arr[newPos].info != Empty && H->arr[newPos].data != key)
     {
         ++cnt;
         if (cnt % 2 != 0)
         {
-            // ²úÉúÆæÊı´Î³åÍ»
+            // äº§ç”Ÿå¥‡æ•°æ¬¡å†²çª
             newPos = (int)(currentPos + pow(((cnt + 1) / 2), 2)) % H->TableSize;
         }
         else
-        { // ²úÉúÅ¼Êı´Î³åÍ»
+        { // äº§ç”Ÿå¶æ•°æ¬¡å†²çª
             newPos = (int)(currentPos - pow((cnt / 2), 2));
             while (newPos < 0)
             {
