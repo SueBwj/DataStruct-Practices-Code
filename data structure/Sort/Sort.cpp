@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 #define MAXSIZE 10
 
@@ -115,19 +116,62 @@ void HeapSort(SqList *L)
     }
 }
 
+void merge(vector<int> &nums, int left, int mid, int right)
+{
+    vector<int> tmp(nums.begin(), nums.end());
+    int leftPtr = left;
+    int rightPtr = mid + 1;
+    int k = left;
+    while (leftPtr <= mid && rightPtr <= right)
+    {
+        if (tmp[leftPtr] < tmp[rightPtr])
+        {
+            nums[k++] = tmp[leftPtr];
+            leftPtr++;
+        }
+        else
+        {
+            nums[k++] = tmp[rightPtr];
+            rightPtr++;
+        }
+    }
+    // 左边有剩余
+    while (leftPtr <= mid)
+    {
+        nums[k++] = tmp[leftPtr++];
+    }
+    // 右边有剩余
+    while (rightPtr <= right)
+    {
+        nums[k++] = tmp[rightPtr++];
+    }
+}
+
+void mergeSort(vector<int> &nums, int left, int right)
+{
+    if (left >= right)
+    {
+        return;
+    }
+    int mid = left + (right - left) / 2;
+    mergeSort(nums, left, mid);
+    mergeSort(nums, mid + 1, right);
+    merge(nums, left, mid, right);
+}
+
+void Print(const vector<int> &v)
+{
+    for (int i = 0; i < v.size(); i++)
+    {
+        cout << v[i] << " ";
+    }
+    cout << endl;
+}
+
 // driver code
 int main()
 {
-    SqList *L = new SqList();
-    for (int i = 1; i < MAXSIZE + 1; i++)
-    {
-        L->r[i] = i;
-        L->length++;
-    }
-    L->r[2] = 1;
-    L->r[1] = 12;
-    L->r[3] = 13;
-    L->r[6] = 3;
-    HeapSort(L);
-    Print(L);
+    vector<int> v = {7, 3, 2, 6, 0, 1, 5, 4};
+    mergeSort(v, 0, v.size() - 1);
+    Print(v);
 }
