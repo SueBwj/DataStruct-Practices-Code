@@ -80,6 +80,41 @@ void InsertSort(SqList *L)
     }
 }
 
+void siftDown(SqList *L, int n, int i)
+{
+    while (true)
+    {
+        int l = 2 * i;
+        int ri = 2 * i + 1;
+        int ma = i;
+        if (l < n && L->r[l] > L->r[ma])
+            ma = l;
+        if (ri < n && L->r[ri] > L->r[ma])
+            ma = ri;
+        if (ma == i)
+        {
+            break;
+        }
+        swap(L, ma, i);
+        i = ma;
+    }
+}
+
+void HeapSort(SqList *L)
+{
+    // 建堆操作：堆化除叶节点以外的其他所有节点
+    for (int i = L->length / 2; i >= 1; i--)
+    {
+        siftDown(L, L->length / 2, i);
+    }
+    // 从堆中提取最大元素，循环 n-1 轮
+    for (int i = L->length; i > 1; i--)
+    {
+        swap(L->r[1], L->r[i]);
+        siftDown(L, i, 1);
+    }
+}
+
 // driver code
 int main()
 {
@@ -93,6 +128,6 @@ int main()
     L->r[1] = 12;
     L->r[3] = 13;
     L->r[6] = 3;
-    InsertSort(L);
+    HeapSort(L);
     Print(L);
 }
