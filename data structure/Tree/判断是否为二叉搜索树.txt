@@ -1,0 +1,30 @@
+1. 容易错的点：
+ public static boolean isBSTBad(TreeNode T) {
+ 	if (T == null) {
+ 		return true;
+ 	} else if (T.left != null && T.left.val > T.val) {
+ 		return false;
+ 	} else if (T.right != null && T.right.val < T.val) {
+ 		return false;
+ 	} else {
+ 		return isBSTBad(T.left) && isBSTBad(T.right);
+ 	}
+ }
+这只判断了左右两个节点是否满足条件，而没有判断左右“子树”的节点都满足条件
+
+2.改进
+public static boolean isBSTGood(TreeNode T) {
+	return isBSTHelper(T, Integer.MIN_VALUE, Integer.MAX_VALUE);
+}
+
+public static boolean isBSTHelper(TreeNode T, int min, int max) {
+	if (T == null) {
+		return true;
+	} else if (T.val < min || T.val > max) {
+		return false;
+	} else {
+	return isBST(T.left, min, T.val) && isBST(T.right, T.val, max);
+	}
+}
+确保每一个节点都在范围内，调用左节点的时候，max = t.val 缩小上限
+			调用右节点的时候，min = t.val 缩小下界
