@@ -3,6 +3,8 @@
 #include <algorithm>
 using namespace std;
 
+// 用最大堆的方法构建最小堆的时候，只需要在插入的时候将输入取负，在remove返回值时再取负
+
 template <typename T>
 class MaxHeap
 {
