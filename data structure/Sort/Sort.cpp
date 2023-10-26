@@ -103,7 +103,7 @@ void siftDown(SqList *L, int n, int i)
 
 void HeapSort(SqList *L)
 {
-    // 建堆操作：堆化除叶节点以外的其他所有节点
+    // 建堆操作：堆化除叶节点以外的其他所有节点，构建的是大根堆
     for (int i = L->length / 2; i >= 1; i--)
     {
         siftDown(L, L->length / 2, i);

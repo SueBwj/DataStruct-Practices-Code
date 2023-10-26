@@ -1,0 +1,8 @@
+BinaryNode* clone(BinaryNode *t) const{
+    if(t == nullptr) {
+        return nullptr;
+    } else {
+        // 这一步很巧妙
+        return new BinaryNode(t->element, clone(t->left), clone(t->right))
+    }
+}
