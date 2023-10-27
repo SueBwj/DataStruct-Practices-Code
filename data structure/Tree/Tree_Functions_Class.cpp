@@ -13,7 +13,7 @@ struct TreeNode
     TreeNode() : data(0), left(nullptr), right(nullptr) {}
 };
 
-// using stack to implement inorder traversal
+// 使用栈完成中序遍历
 // 1. always left
 // 2. left == nullptr then turn to right tree(then left)
 void InOrderTraversal(BinTree BT)
@@ -71,7 +71,7 @@ BinTree Parent(BinTree rt, BinTree current)
     }
 }
 
-// 先序遍历何中序遍历来确定一颗二叉树
+// 先序遍历和中序遍历来确定一颗二叉树
 /*
 输入: preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]
 输出: [3,9,20,null,null,15,7]
