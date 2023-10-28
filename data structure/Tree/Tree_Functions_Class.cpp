@@ -8,10 +8,11 @@ typedef BinTree Position;
 struct TreeNode
 {
     int data;
+    int tag;
     BinTree left;
     BinTree right;
-    TreeNode(int val) : data(val), left(nullptr), right(nullptr) {}
-    TreeNode() : data(0), left(nullptr), right(nullptr) {}
+    TreeNode(int val) : data(val), tag(0), left(nullptr), right(nullptr) {}
+    TreeNode() : data(0), tag(0), left(nullptr), right(nullptr) {}
 };
 
 // 使用栈完成中序遍历
@@ -143,6 +144,42 @@ void levelTraversal(BinTree root)
     }
 }
 
+// 后续遍历非递归遍历算法
+void PostOrder(BinTree root)
+{
+    stack<BinTree> st;
+    st.push(root);
+    root->tag = 0;
+    while (!st.empty())
+    {
+        while (root->left && root->tag == 0)
+        {
+            st.push(root->left);
+            root->left->tag = 0;
+            root = root->left;
+        }
+        // 特别注意这里是把stack的top值赋给了root
+        root = st.top();
+        if (root->tag == 0)
+        {
+
+            root->tag = 1;
+            if (root->right)
+            {
+                st.push(root->right);
+                root->right->tag = 0;
+                // 这里别忘记移动root
+                root = root->right;
+            }
+        }
+        else if (root->tag == 1)
+        {
+            cout << root->data << " ";
+            st.pop();
+        }
+    }
+}
+
 int main()
 {
     // driver code of InOrderTraversal
@@ -169,5 +206,5 @@ int main()
     vector<int> preorder = {3, 9, 20, 15, 7};
     vector<int> inorder = {9, 3, 15, 20, 7};
     BinTree tree = buildTree(preorder, inorder);
-    levelTraversal(tree);
+    PostOrder(tree);
 }
