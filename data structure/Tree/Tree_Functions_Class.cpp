@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stack>
 #include <vector>
+#include <queue>
 using namespace std;
 typedef struct TreeNode *BinTree;
 typedef BinTree Position;
@@ -117,6 +118,31 @@ TreeNode *buildTree(vector<int> preorder, vector<int> inorder)
     }
 }
 
+// 层序遍历树
+void levelTraversal(BinTree root)
+{
+    if (root == nullptr)
+    {
+        return;
+    }
+    queue<BinTree> q;
+    q.push(root);
+    while (!q.empty())
+    {
+        BinTree tmp = q.front();
+        cout << tmp->data << " ";
+        q.pop();
+        if (tmp->left)
+        {
+            q.push(tmp->left);
+        }
+        if (tmp->right)
+        {
+            q.push(tmp->right);
+        }
+    }
+}
+
 int main()
 {
     // driver code of InOrderTraversal
@@ -143,5 +169,5 @@ int main()
     vector<int> preorder = {3, 9, 20, 15, 7};
     vector<int> inorder = {9, 3, 15, 20, 7};
     BinTree tree = buildTree(preorder, inorder);
-    InOrderTraversal(tree);
+    levelTraversal(tree);
 }
